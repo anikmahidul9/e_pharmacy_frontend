@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { ShieldCheck, Truck, Clock, Award } from 'lucide-react';
 
 const Hero = () => {
