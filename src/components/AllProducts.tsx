@@ -1,6 +1,7 @@
+
 import { Star, Heart, ShoppingCart } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { addToCart } from '../services/CartService';
 import { getCurrentUser } from '../services/AuthService';
 
@@ -17,7 +18,7 @@ interface Product {
   howToUse: string;
 }
 
-const Products = () => {
+const AllProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const navigate = useNavigate();
 
@@ -40,7 +41,6 @@ const Products = () => {
 
   const handleAddToCart = async (productId: string) => {
     const currentUser = getCurrentUser();
-    console.log(currentUser);
     if (!currentUser) {
       alert('Please log in to add items to your cart.');
       navigate('/login');
@@ -56,40 +56,13 @@ const Products = () => {
     }
   };
 
-  const categories = [
-    {
-      name: "Prescription Medicines",
-      description: "Doctor prescribed medications",
-      image: "https://agewellmedical.com/wp-content/uploads/doctor-writing-a-prescription.jpg",
-      color: "bg-blue-100 text-blue-600"
-    },
-    {
-      name: "Over-the-Counter",
-      description: "Self-medication solutions",
-      image: "https://images.pexels.com/photos/3683074/pexels-photo-3683074.jpeg",
-      color: "bg-green-100 text-green-600"
-    },
-    {
-      name: "Health Supplements",
-      description: "Vitamins and wellness products",
-      image: "https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg",
-      color: "bg-purple-100 text-purple-600"
-    },
-    {
-      name: "Personal Care",
-      description: "Beauty and hygiene products",
-      image: "https://t4.ftcdn.net/jpg/02/99/06/03/360_F_299060393_2kkwSCSx36oUXfrdEDrYkP2PlDAteMHW.jpg",
-      color: "bg-pink-100 text-pink-600"
-    }
-  ];
-
   return (
     <section id="products" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Our Product Categories
+            All Products
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Find everything you need for your health and wellness from our extensive 
@@ -97,44 +70,8 @@ const Products = () => {
           </p>
         </div>
 
-        {/* Categories Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-          {categories.map((category, index) => (
-            <div
-              key={index}
-              className="group cursor-pointer transition-all duration-300 hover:transform hover:scale-105"
-            >
-              <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
-                <div className="relative h-48">
-                  <img
-                    src={category.image}
-                    alt={category.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                </div>
-                <div className="p-6">
-                  <div className={`inline-block px-3 py-1 rounded-full text-sm font-semibold mb-3 ${category.color}`}>
-                    {category.name}
-                  </div>
-                  <p className="text-gray-600">{category.description}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
         {/* Featured Products */}
         <div>
-          <div className="flex justify-between items-center mb-8">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-900">
-              Featured Products
-            </h3>
-            <Link to="/all-products" className="text-blue-600 hover:text-blue-700 font-semibold transition-colors">
-              View All Products →
-            </Link>
-          </div>
-
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((product) => (
               <div
@@ -197,4 +134,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default AllProducts;
