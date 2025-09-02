@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 
 const API_URL = 'http://localhost:5045/api/cart';
@@ -19,8 +18,16 @@ export const getCart = async () => {
   return response.data;
 };
 
-export const addToCart = async (productId: string, quantity: number) => {
-  const response = await axios.post(API_URL, { productId, quantity }, getAuthHeaders());
+interface CartItem {
+  productId: string;
+  quantity: number;
+  productName: string;
+  productPrice: number;
+  productImage: string;
+}
+
+export const addToCart = async (item: CartItem) => {
+  const response = await axios.post(`${API_URL}/`, item, getAuthHeaders());
   return response.data;
 };
 

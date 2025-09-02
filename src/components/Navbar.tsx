@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from 'react';
 import { Menu, X, Phone, MapPin, User } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -92,7 +90,7 @@ const Navbar = () => {
                   Login
                 </Link>
               )}
-              <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors">
+              <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-semibold transition-colors text-sm">
                 Upload Prescription
               </button>
             </div>
@@ -136,9 +134,9 @@ const Navbar = () => {
                     Login
                   </Link>
                 )}
-                <button className="w-full bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors">
-                  Upload Prescription
-                </button>
+                <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors">
+                Upload Prescription
+              </button>
               </div>
             </div>
           </div>

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { getCart, removeFromCart, clearCart } from '../services/CartService';
 
@@ -89,6 +88,12 @@ const Cart = () => {
             className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg ml-4"
           >
             Clear Cart
+          </button>
+          <button
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg ml-4"
+            // Add your payment handler here
+          >
+            Pay
           </button>
         </div>
       </div>
