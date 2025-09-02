@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getCart, removeFromCart, clearCart } from '../services/CartService';
+import { useNavigate } from 'react-router-dom';
 
 interface CartItem {
   productId: string;
@@ -16,6 +17,7 @@ interface Cart {
 
 const Cart = () => {
   const [cart, setCart] = useState<Cart | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -90,10 +92,10 @@ const Cart = () => {
             Clear Cart
           </button>
           <button
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg ml-4"
-            // Add your payment handler here
+            onClick={() => navigate('/checkout')}
+            className="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg ml-4"
           >
-            Pay
+            Proceed to Checkout
           </button>
         </div>
       </div>

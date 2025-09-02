@@ -8,6 +8,8 @@ import { Routes, Route } from 'react-router-dom';
 import Products from './components/Products';
 import AllProducts from './components/AllProducts';
 import Cart from './components/Cart';
+import CheckoutPage from './components/CheckoutPage';
+import InvoicePage from './components/InvoicePage';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path='/products' element={<Products/>} />
         <Route path='/all-products' element={<AllProducts/>} />
         <Route path='/cart' element={<Cart/>} />
+        <Route path='/checkout' element={<CheckoutPage/>} />
+        <Route path='/invoice/:orderId' element={<InvoicePage/>} />
       </Routes>
       <Footer />
     </div>

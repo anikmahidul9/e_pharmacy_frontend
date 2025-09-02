@@ -1,16 +1,16 @@
 
-import axios from 'axios';
+import api from './api';
 import { jwtDecode } from 'jwt-decode';
 
-const API_URL = 'http://localhost:5045/api/users';
+const API_URL = '/api/users';
 
 export const register = async (userData: any) => {
-  const response = await axios.post(`${API_URL}/register`, userData);
+  const response = await api.post(`${API_URL}/register`, userData);
   return response.data;
 };
 
 export const login = async (credentials: any) => {
-  const response = await axios.post(`${API_URL}/login`, credentials);
+  const response = await api.post(`${API_URL}/login`, credentials);
   if (response.data.token) {
     localStorage.setItem('token', response.data.token);
   }

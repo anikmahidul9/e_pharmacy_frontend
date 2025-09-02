@@ -10,7 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@stripe/react-stripe-js": "^3.9.2",
+    "@stripe/stripe-js": "^7.9.0",
     "axios": "^1.11.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^3.0.2",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.263.1",
     "react": "^18.2.0",
