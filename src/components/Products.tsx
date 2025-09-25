@@ -1,4 +1,4 @@
-import { Star, Heart, ShoppingCart } from 'lucide-react';
+import { Heart, ShoppingCart } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { addToCart } from '../services/CartService';

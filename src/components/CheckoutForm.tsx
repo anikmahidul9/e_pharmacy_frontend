@@ -5,7 +5,7 @@ import {
   useStripe,
   useElements
 } from '@stripe/react-stripe-js';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const ELEMENT_OPTIONS = {
   style: {
@@ -22,15 +22,20 @@ const ELEMENT_OPTIONS = {
   },
 };
 
-const CheckoutForm = ({ onSuccessfulCheckout, amount }) => {
+interface CheckoutFormProps {
+  onSuccessfulCheckout: (paymentMethodId: string) => void;
+  amount: number;
+}
+
+const CheckoutForm = ({ onSuccessfulCheckout, amount }: CheckoutFormProps) => {
   const stripe = useStripe();
   const elements = useElements();
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [processing, setProcessing] = useState(false);
   const [name, setName] = useState('');
   const [zip, setZip] = useState('');
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setProcessing(true);
 
@@ -39,6 +44,12 @@ const CheckoutForm = ({ onSuccessfulCheckout, amount }) => {
     }
 
     const cardNumberElement = elements.getElement(CardNumberElement);
+
+    if (!cardNumberElement) {
+      setError("Card number element not found");
+      setProcessing(false);
+      return;
+    }
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
@@ -52,7 +63,7 @@ const CheckoutForm = ({ onSuccessfulCheckout, amount }) => {
     });
 
     if (error) {
-      setError(error.message);
+      setError(error.message || "An unexpected error occurred");
       setProcessing(false);
     } else {
       setError(null);

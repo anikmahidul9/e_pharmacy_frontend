@@ -1,10 +1,30 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
+interface OrderItem {
+  productId: string;
+  productName: string;
+  quantity: number;
+  price: number;
+  productImage: string;
+}
+
+interface Order {
+  id: string;
+  userId: string;
+  createdAt: string;
+  status: string;
+  items: OrderItem[];
+  totalPrice: number;
+}
+
 // This would typically be in a service file
-const getOrderDetails = async (orderId, token) => {
+const getOrderDetails = async (orderId: string, token: string | null) => {
+  if (!token) {
+    throw new Error('Authentication token not found');
+  }
   const response = await fetch(`/api/orders/${orderId}`, {
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -17,20 +37,26 @@ const getOrderDetails = async (orderId, token) => {
 };
 
 const InvoicePage = () => {
-  const { orderId } = useParams();
-  const [order, setOrder] = useState(null);
+  const { orderId } = useParams<{ orderId: string }>();
+  const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const invoiceRef = useRef(null);
+  const [error, setError] = useState<string | null>(null);
+  const invoiceRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchOrder = async () => {
       try {
         const token = localStorage.getItem('token');
-        const orderDetails = await getOrderDetails(orderId, token);
-        setOrder(orderDetails);
+        if (orderId) {
+          const orderDetails = await getOrderDetails(orderId, token);
+          setOrder(orderDetails);
+        }
       } catch (err) {
-        setError(err.message);
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('An unknown error occurred');
+        }
       } finally {
         setLoading(false);
       }
@@ -41,11 +67,16 @@ const InvoicePage = () => {
 
   const downloadPdf = () => {
     const input = invoiceRef.current;
+    if (!input) {
+      console.error("Invoice ref is null, cannot download PDF.");
+      return;
+    }
+
     html2canvas(input, { scale: 2 }).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const pdfHeight = pdf.internal.pageSize.getHeight(); // Keep this if it's used elsewhere or for calculation
       const canvasWidth = canvas.width;
       const canvasHeight = canvas.height;
       const ratio = canvasWidth / canvasHeight;
@@ -94,7 +125,7 @@ const InvoicePage = () => {
               </tr>
             </thead>
             <tbody>
-              {order.items.map(item => (
+              {order.items.map((item: OrderItem) => (
                 <tr key={item.productId} className="border-b">
                   <td className="px-6 py-4 flex items-center">
                     <img src={item.productImage} alt={item.productName} className="w-16 h-16 object-cover rounded-md mr-4" />

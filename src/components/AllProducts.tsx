@@ -1,5 +1,5 @@
 
-import { Star, Heart, ShoppingCart } from 'lucide-react';
+import { Heart, ShoppingCart } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addToCart } from '../services/CartService';
@@ -39,7 +39,7 @@ const AllProducts = () => {
     fetchProducts();
   }, []);
 
-  const handleAddToCart = async (productId: string) => {
+  const handleAddToCart = async (product: Product) => {
     const currentUser = getCurrentUser();
     if (!currentUser) {
       alert('Please log in to add items to your cart.');
@@ -48,7 +48,13 @@ const AllProducts = () => {
     }
 
     try {
-      await addToCart(productId, 1); // Add 1 quantity for now
+      await addToCart({
+        productId: product.id,
+        quantity: 1,
+        productName: product.title,
+        productPrice: product.price,
+        productImage: product.image,
+      });
       alert('Product added to cart!');
     } catch (error) {
       console.error('Error adding to cart:', error);
@@ -113,7 +119,7 @@ const AllProducts = () => {
 
                   {/* Add to Cart Button */}
                   <button
-                    onClick={() => handleAddToCart(product.id)}
+                    onClick={() => handleAddToCart(product)}
                     disabled={product.stock === 0}
                     className={`w-full py-3 rounded-lg font-semibold flex items-center justify-center space-x-2 transition-all ${
                       product.stock > 0

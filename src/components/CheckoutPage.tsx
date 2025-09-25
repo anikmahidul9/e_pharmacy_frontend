@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from './CheckoutForm';
@@ -7,9 +7,22 @@ import { getCart } from '../services/CartService'; // Assuming this service exis
 
 const stripePromise = loadStripe('pk_test_51S2mucBaBNeAZ5bSbCWlkr3jkHn3C1zxNWASrDpoOWqcVgg5w9wQGW1xrm24mGoNKpvTL1yzAu9ZWxN7wNJd7x5b00sujR09kg');
 
+interface CartItem {
+  productId: string;
+  productName: string;
+  quantity: number;
+  productPrice: number;
+  productImage: string;
+}
+
+interface Cart {
+  items: CartItem[];
+  totalPrice: number;
+}
+
 const CheckoutPage = () => {
   const navigate = useNavigate();
-  const [cart, setCart] = useState(null);
+  const [cart, setCart] = useState<Cart | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,7 +40,7 @@ const CheckoutPage = () => {
     fetchCart();
   }, []);
 
-  const handleSuccessfulCheckout = async (paymentMethodId) => {
+  const handleSuccessfulCheckout = async (paymentMethodId: string) => {
     try {
       const token = localStorage.getItem('token');
       const response = await fetch('/api/payment/checkout', {
@@ -81,7 +94,7 @@ const CheckoutPage = () => {
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-2xl font-semibold mb-6">Order Summary</h2>
             <div className="space-y-4">
-              {cart.items.map(item => (
+              {cart.items.map((item: CartItem) => (
                 <div key={item.productId} className="flex justify-between items-center">
                   <div>
                     <p className="font-semibold">{item.productName}</p>
