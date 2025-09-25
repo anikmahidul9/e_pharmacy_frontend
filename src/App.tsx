@@ -10,6 +10,7 @@ import AllProducts from './components/AllProducts';
 import Cart from './components/Cart';
 import CheckoutPage from './components/CheckoutPage';
 import InvoicePage from './components/InvoicePage';
+import AddProduct from './components/AddProduct';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/cart' element={<Cart/>} />
         <Route path='/checkout' element={<CheckoutPage/>} />
         <Route path='/invoice/:orderId' element={<InvoicePage/>} />
+        <Route path='/add-product' element={<AddProduct/>} />
       </Routes>
       <Footer />
     </div>

@@ -65,6 +65,7 @@ const Navbar = () => {
               <div className="ml-10 flex items-baseline space-x-8">
                 <Link to="/" className={getLinkClass('/')}>Home</Link>
                 <Link to="/all-products" className={getLinkClass('/all-products')}>Products</Link>
+                <Link to="/add-product" className={getLinkClass('/add-product')}>Add Product</Link>
                 <Link to="/cart" className={getLinkClass('/cart')}>Cart</Link>
                 <a href="#services" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm transition-colors">Services</a>
                 <a href="#about" className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm transition-colors">About Us</a>
@@ -113,6 +114,7 @@ const Navbar = () => {
             <div className="px-2 pt-2 pb-3 space-y-1">
               <Link to="/" className="block px-3 py-2 text-blue-600 font-semibold text-base">Home</Link>
               <Link to="/all-products" className="block px-3 py-2 text-gray-700 text-base hover:text-blue-600">Products</Link>
+              <Link to="/add-product" className="block px-3 py-2 text-gray-700 text-base hover:text-blue-600">Add Product</Link>
               <Link to="/cart" className="block px-3 py-2 text-gray-700 text-base hover:text-blue-600">Cart</Link>
               <a href="#services" className="block px-3 py-2 text-gray-700 text-base hover:text-blue-600">Services</a>
               <a href="#about" className="block px-3 py-2 text-gray-700 text-base hover:text-blue-600">About Us</a>
