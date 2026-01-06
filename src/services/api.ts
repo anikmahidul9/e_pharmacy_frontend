@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5045/api',
+const api = axios.create({
+  baseURL: '/', // The base URL will be handled by the proxy
 });
 
 // Add a request interceptor to include the token in headers
